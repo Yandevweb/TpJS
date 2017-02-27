@@ -1,0 +1,23 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+.game {
+	margin: 0 auto;
+	margin-top: 100px;
+	width: 70%;
+}
+
+table {
+	width : 100%;
+}
+
+.axe {
+	background-color: #ffa726;
+}
+
+.case {
+	width: 9.09%;
+	height: 50px;
+	background-color: #b3e5fc;
+}
