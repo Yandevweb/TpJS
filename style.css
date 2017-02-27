@@ -21,3 +21,8 @@ table {
 	height: 50px;
 	background-color: #b3e5fc;
 }
+
+.cross {
+	background-image: url("./images/cross.png");
+	background-size: 100% 100%;
+}

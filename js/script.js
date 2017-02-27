@@ -28,7 +28,6 @@ function init(){
 		
 			for (k = 0; k < 11; k++){
 
-				// var dataT1 =  "data-table='t1' data-x='"+ alpha[k] +"' data-y='"+ num[i] +"' ";
 				var dataT1 =  " onclick='alertf(\"t1\",\""+ alpha[k] +"\", \""+ num[i] +"\")'" ;
 				if (k == 0){
 					dataT1 = '';
@@ -39,8 +38,7 @@ function init(){
 					$("#t1 ." + alpha[k] + "-" + num[i]).append("<p>"+ num[i] + "<p>");
 					$("#t1").append("</td>");
 				} else {
-					$("#t1").append("<td class='case " + alpha[k] + "-" + num[i] + "'"+ dataT1 +" >");
-					//$("#t1 ." + alpha[k] + "-" + num[i]).append("<p>" + alpha[k] + " - " + num[i] + "<p>");
+					$("#t1").append("<td class='case' id='t1-" + alpha[k] + "-" + num[i] + "'"+ dataT1 +" >");
 					$("#t1").append("</td>");
 				}
 
@@ -70,7 +68,6 @@ function init(){
 		
 			for (k = 0; k < 11; k++){
 
-				// var dataT2 =  "data-table='t2' data-x='"+ alpha[k] +"' data-y='"+ num[i] +"' ";
 				var dataT2 =  " onclick='alertf(\"t2\",\""+ alpha[k] +"\", \""+ num[i] +"\")'" ;
 				if (k == 0){
 					dataT2 = '';
@@ -81,8 +78,7 @@ function init(){
 					$("#t2 ." + alpha[k] + "-" + num[i]).append("<p>"+ num[i] + "<p>");
 					$("#t2").append("</td>");
 				} else {
-					$("#t2").append("<td class='case " + alpha[k] + "-" + num[i] + "'"+ dataT2 +" >");
-					//$("#t2 ." + alpha[k] + "-" + num[i]).append("<p>" + alpha[k] + " - " + num[i] + "<p>");
+					$("#t2").append("<td class='case' id='t2-" + alpha[k] + "-" + num[i] + "'"+ dataT2 +" >");
 					$("#t2").append("</td>");
 				}
 
@@ -94,5 +90,8 @@ function init(){
 };
 
 function alertf(t, x, y){
-	alert("Case " + t + " - " + x + " - " + y + " clickée");
+	//alert("#"+t+"-"+x+"-"+y);
+	//$("#"+t +" .case ."+x+"-"+y).addClass("cross");
+	$("#"+t+"-"+x+"-"+y).css("background-image", "url('./images/cross.png')");
+	$("#"+t+"-"+x+"-"+y).css("background-size", "100% 100%");
 };
