@@ -3,6 +3,10 @@ var alpha    = [0, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 var num      = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var taken 	 = [];
 var nb_cases = 11;
+var p1Active = true;
+var p2Active = false;
+var p1Life   = 17;
+var p2Life   = 17;
 
 $(document).ready(
 	function(){
@@ -94,14 +98,31 @@ function init(){
 };
 
 function shoot(t, x, y){
-	//alert("#"+t+"-"+x+"-"+y);
-	//$("#"+t +" .case ."+x+"-"+y).addClass("cross");
-	if ($("#"+t+"-"+x+"-"+y).hasClass("boat")){
-		$("#"+t+"-"+x+"-"+y).css("background-image", "url('./images/boom.png')");
-	} else {
-		$("#"+t+"-"+x+"-"+y).css("background-image", "url('./images/cross.png')");
+	if($("#"+t+"-"+x+"-"+y).hasClass("hit") != true &&
+		((p1Active == true && t == "t2") || (p2Active == true && t == "t1"))){
+		// Si c'est un bateau Boom et dégats
+		if ($("#"+t+"-"+x+"-"+y).hasClass("boat")){
+			$("#"+t+"-"+x+"-"+y).css("background-image", "url('./images/boom.png')");
+			damage("#"+t+"-"+x+"-"+y);
+		} else {
+			$("#"+t+"-"+x+"-"+y).css("background-image", "url('./images/cross.png')");
+		}
+		$("#"+t+"-"+x+"-"+y).addClass("hit");
+		$("#"+t+"-"+x+"-"+y).css("background-size", "100% 100%");
+
+		// On change de joueur
+		if (p1Active){
+			p1Active = false;
+			p2Active = true;
+			$(".game2").css("opacity", "0.5");
+			$(".game1").css("opacity", "1");
+		} else if (p2Active){
+			p2Active = false;
+			p1Active = true;
+			$(".game1").css("opacity", "0.5");
+			$(".game2").css("opacity", "1");
+		}
 	}
-	$("#"+t+"-"+x+"-"+y).css("background-size", "100% 100%");
 };
 
 function posBoat(){
@@ -115,36 +136,41 @@ function posBoat(){
 	// flotte
 	var flotte = [portAvion, croiseur, destroyer, sousmarin, torpilleur];
 
+	// Joueur 1
 	for ( i = 0; i < flotte.length; i++){
-		deploy(flotte[i]);
+		deploy(flotte[i], "t1");
+	};
+
+	taken = [];
+	// Joueur 2
+	for ( i = 0; i < flotte.length; i++){
+		deploy(flotte[i], "t2");
 	};
 };
 
-function deploy(boat){
-	var posed         = false;
+function deploy(boat, t){
+	
+	var posed = false;
 
 	while (posed == false){
 		var poseAvailable = true;
 		var orientation   = Math.floor((Math.random() * 2) + 1);
 		var axeX          = Math.floor((Math.random() * 10) + 1);
 		var axeY          = Math.floor((Math.random() * 10) + 1);
+
 		// Il ne faut pas dépasser du cadre ça serait dommage..
 		if ((axeX + boat.len < 10) && (axeY + boat.len < 10)){
 
 			if (orientation == 1){
 				for (k = 0; k < boat.len; k++){
-						console.log($.inArray("#t1-"+alpha[axeX + k]+"-"+num[axeY], taken));
-					if ($.inArray("#t1-"+alpha[axeX + k]+"-"+num[axeY], taken) != -1){
+					if ($.inArray("#"+ t +"-"+alpha[axeX + k]+"-"+num[axeY], taken) != -1){
 						poseAvailable = false;
-						//break;
 					}
 				}
 			} else if (orientation == 2){
 				for (l = 0; l < boat.len; l++){
-						console.log($.inArray("#t1-"+alpha[axeX]+"-"+num[axeY + l], taken));
-					if ($.inArray("#t1-"+alpha[axeX]+"-"+num[axeY + l], taken) != -1){
+					if ($.inArray("#"+ t +"-"+alpha[axeX]+"-"+num[axeY + l], taken) != -1){
 						poseAvailable = false;
-						//break;
 					}
 				};
 			}
@@ -152,25 +178,39 @@ function deploy(boat){
 			if (poseAvailable != false){
 				if (orientation == 1){
 					for (k = 0; k < boat.len; k++){
-						$("#t1-"+alpha[axeX + k]+"-"+num[axeY]).addClass(boat.name);
-						$("#t1-"+alpha[axeX + k]+"-"+num[axeY]).addClass("boat");
-						taken.push("#t1-"+alpha[axeX + k]+"-"+num[axeY]);
+						$("#"+ t +"-"+alpha[axeX + k]+"-"+num[axeY]).addClass(boat.name);
+						$("#"+ t +"-"+alpha[axeX + k]+"-"+num[axeY]).addClass("boat");
+						taken.push("#"+ t +"-"+alpha[axeX + k]+"-"+num[axeY]);
 					};
 				} else if (orientation == 2){
 					for (l = 0; l < boat.len; l++){
-						$("#t1-"+alpha[axeX]+"-"+num[axeY + l]).addClass(boat.name);
-						$("#t1-"+alpha[axeX]+"-"+num[axeY + l]).addClass("boat");
-						taken.push("#t1-"+alpha[axeX]+"-"+num[axeY + l]);
+						$("#"+ t +"-"+alpha[axeX]+"-"+num[axeY + l]).addClass(boat.name);
+						$("#"+ t +"-"+alpha[axeX]+"-"+num[axeY + l]).addClass("boat");
+						taken.push("#"+ t +"-"+alpha[axeX]+"-"+num[axeY + l]);
 					};
 				}
 				posed = true;
 			}
 		} else {
-			console.log(poseAvailable);
 			orientation = Math.floor((Math.random() * 2) + 1);
 			axeX        = Math.floor((Math.random() * 10) + 1);
 			axeY        = Math.floor((Math.random() * 10) + 1);
 			posed 		= false;
 		}
+	}
+};
+
+function damage(coords){
+	$(coords).removeClass("boat");
+	if (p1Active){
+		p2Life = p2Life - 1;
+	} else if (p2Active){
+		p1Life = p1Life - 1;
+	}
+
+	if (p1Life <= 0){
+		alert("Joueur 2 gagne !");
+	} else if (p2Life <= 0){
+		alert("Joueur 1 gagne !");
 	}
 };

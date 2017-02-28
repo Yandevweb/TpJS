@@ -2,10 +2,26 @@ table, th, td {
     border: 1px solid black;
 }
 
-.game {
+.container {
+	display: block;
+	width: 80%;
 	margin: 0 auto;
+}
+
+
+.game1 {
+	display: inline-block;
 	margin-top: 100px;
-	width: 70%;
+	width: 40%;
+	opacity: 0.5;
+}
+
+.game2 {
+	display: inline-block;
+	float: right;
+	margin-top: 100px;
+	width: 40%;
+	opacity: 1;
 }
 
 table {
@@ -20,6 +36,7 @@ table {
 	width: 9.09%;
 	height: 50px;
 	background-color: #b3e5fc;
+	text-align: center;
 }
 
 .cross {
@@ -28,21 +45,21 @@ table {
 }
 
 .portAvion {
-	background-color: red;
+	/*background-color: red;*/
 }
 
 .croiseur {
-	background-color: blue;
+	/*background-color: blue;*/
 }
 
 .sousmarin {
-	background-color: cyan;
+	/*background-color: cyan;*/
 }
 
 .torpilleur {
-	background-color: orange;
+	/*background-color: orange;*/
 }
 
 .destroyer {
-	background-color: yellow;
+	/*background-color: yellow;*/
 }
