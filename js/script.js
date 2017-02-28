@@ -216,8 +216,8 @@ function damage(coords){
 		swal({
 		    title: 'Joueur 2 gagne !',
 		    imageUrl: './images/win.gif',
-		    imageWidth: 400,
-		    imageHeight: 200,
+		    imageWidth: 344,
+		    imageHeight: 272,
 			animation: false,
 			showConfirmButton: false
 		});
