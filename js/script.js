@@ -12,6 +12,10 @@ $(document).ready(
 	function(){
 		init();
 		posBoat();
+		swal({
+			title: "La nouvelle partie, Joueur 1 commence",
+			showConfirmButton: false
+		});
 	});
 
 function init(){
@@ -209,8 +213,22 @@ function damage(coords){
 	}
 
 	if (p1Life <= 0){
-		alert("Joueur 2 gagne !");
+		swal({
+		    title: 'Joueur 2 gagne !',
+		    imageUrl: './images/win.gif',
+		    imageWidth: 400,
+		    imageHeight: 200,
+			animation: false,
+			showConfirmButton: false
+		});
 	} else if (p2Life <= 0){
-		alert("Joueur 1 gagne !");
+		swal({
+		    title: 'Joueur 1 gagne !',
+		    imageUrl: './images/win.gif',
+		    imageWidth: 344,
+		    imageHeight: 272,
+			animation: false,
+			showConfirmButton: false
+		});
 	}
 };
