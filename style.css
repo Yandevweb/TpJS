@@ -26,3 +26,23 @@ table {
 	background-image: url("./images/cross.png");
 	background-size: 100% 100%;
 }
+
+.portAvion {
+	background-color: red;
+}
+
+.croiseur {
+	background-color: blue;
+}
+
+.sousmarin {
+	background-color: cyan;
+}
+
+.torpilleur {
+	background-color: orange;
+}
+
+.destroyer {
+	background-color: yellow;
+}
