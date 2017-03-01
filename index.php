@@ -13,13 +13,13 @@
 	
 	<div class="container">	
 		<div class="game1">
-			<h4>Joueur 1</h4>
+			<h4  id="title1">Joueur 1</h4>
 			<table id="t1">
 			</table>
 		</div>
 
 		<div class="game2">
-			<h4>Joueur 2</h4>
+			<h4 id="title2">Joueur 2</h4>
 			<table id="t2">
 			</table>
 		</div>

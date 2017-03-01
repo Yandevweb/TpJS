@@ -14,10 +14,6 @@ $(document).ready(
 	function(){
 		init();
 		posBoat();
-		/*swal({
-			title: "La nouvelle partie, Joueur 1 commence",
-			showConfirmButton: false
-		});*/
 		swal({
 			title: 'Nouvelle partie',
 			text: "Selectionner le nombre de joueurs",
@@ -37,6 +33,7 @@ $(document).ready(
 				'success'
 			)
 			cpuActive = true;
+			$("#title2").text("CPU");
 		}, function (dismiss) {
 			// dismiss can be 'cancel', 'overlay',
 			// 'close', and 'timer'
