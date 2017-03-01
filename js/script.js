@@ -179,7 +179,6 @@ function cpuPlay(){
 		if($.inArray(coords, cpuPlayed) == -1){
 			shoot("t1", alpha[axeX], num[axeY]);
 			cpuPlayed.push(coords);
-			console.log(cpuPlayed);
 			shootOk = true;
 		}
 	};
@@ -281,7 +280,7 @@ function damage(coords){
 		swal({
 		    title: 'CPU gagne !',
 		    imageUrl: './images/fail.gif',
-		    imageWidth: 344,
+		    imageWidth: 480,
 		    imageHeight: 272,
 			animation: false,
 			showConfirmButton: false
