@@ -151,13 +151,10 @@ function shoot(t, x, y){
 			p2Active = true;
 			$(".game2").css("opacity", "0.5");
 			$(".game1").css("opacity", "1");
-			cpuPlay();
-		} else if (p2Active && !cpuActive){
-			p2Active = false;
-			p1Active = true;
-			$(".game1").css("opacity", "0.5");
-			$(".game2").css("opacity", "1");
-		} else if (p2Active && cpuActive){
+			if(cpuActive){
+				cpuPlay();
+			}
+		} else if (p2Active){
 			p2Active = false;
 			p1Active = true;
 			$(".game1").css("opacity", "0.5");
