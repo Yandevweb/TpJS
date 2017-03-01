@@ -1,21 +1,55 @@
 // Coordonnées
-var alpha    = [0, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-var num      = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-var taken 	 = [];
-var nb_cases = 11;
-var p1Active = true;
-var p2Active = false;
-var p1Life   = 17;
-var p2Life   = 17;
+var alpha     = [0, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+var num       = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+var taken 	  = [];
+var nb_cases  = 11;
+var p1Active  = true;
+var p2Active  = false;
+var p1Life    = 17;
+var p2Life    = 17;
+var cpuActive = false;
+var cpuPlayed = [];
 
 $(document).ready(
 	function(){
 		init();
 		posBoat();
-		swal({
+		/*swal({
 			title: "La nouvelle partie, Joueur 1 commence",
 			showConfirmButton: false
-		});
+		});*/
+		swal({
+			title: 'Nouvelle partie',
+			text: "Selectionner le nombre de joueurs",
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '1 joueur',
+			cancelButtonText: '2 joueurs',
+			confirmButtonClass: 'btn light-blue accent-3',
+			cancelButtonClass: 'btn light-green accent-3  black-text',
+			buttonsStyling: false
+		}).then(function () {
+			swal(
+				'Okay !',
+				'Vous jouer contre le CPU',
+				'success'
+			)
+			cpuActive = true;
+		}, function (dismiss) {
+			// dismiss can be 'cancel', 'overlay',
+			// 'close', and 'timer'
+				if (dismiss === 'cancel') {
+					swal(
+						'Okay !',
+						'Au joueur 1 de commencer',
+						'success'
+				)
+
+				cpuActive = false;
+			}
+		})
 	});
 
 function init(){
@@ -120,13 +154,35 @@ function shoot(t, x, y){
 			p2Active = true;
 			$(".game2").css("opacity", "0.5");
 			$(".game1").css("opacity", "1");
-		} else if (p2Active){
+			cpuPlay();
+		} else if (p2Active && !cpuActive){
+			p2Active = false;
+			p1Active = true;
+			$(".game1").css("opacity", "0.5");
+			$(".game2").css("opacity", "1");
+		} else if (p2Active && cpuActive){
 			p2Active = false;
 			p1Active = true;
 			$(".game1").css("opacity", "0.5");
 			$(".game2").css("opacity", "1");
 		}
 	}
+};
+
+function cpuPlay(){
+	shootOk = false;
+	while (shootOk == false){
+		var axeX   = Math.floor((Math.random() * 10) + 1);
+		var axeY   = Math.floor((Math.random() * 10) + 1);
+		var coords = "#t1-" + alpha[axeX] + "-" + num[axeY];
+
+		if($.inArray(coords, cpuPlayed) == -1){
+			shoot("t1", alpha[axeX], num[axeY]);
+			cpuPlayed.push(coords);
+			console.log(cpuPlayed);
+			shootOk = true;
+		}
+	};
 };
 
 function posBoat(){
@@ -212,7 +268,7 @@ function damage(coords){
 		p1Life = p1Life - 1;
 	}
 
-	if (p1Life <= 0){
+	if (p1Life <= 0 && !cpuActive){
 		swal({
 		    title: 'Joueur 2 gagne !',
 		    imageUrl: './images/win.gif',
@@ -221,7 +277,16 @@ function damage(coords){
 			animation: false,
 			showConfirmButton: false
 		});
-	} else if (p2Life <= 0){
+	} else if (p1Life <= 0 && cpuActive){
+		swal({
+		    title: 'CPU gagne !',
+		    imageUrl: './images/fail.gif',
+		    imageWidth: 344,
+		    imageHeight: 272,
+			animation: false,
+			showConfirmButton: false
+		});
+	} else if (p2Life <= 0 && cpuActive){
 		swal({
 		    title: 'Joueur 1 gagne !',
 		    imageUrl: './images/win.gif',
